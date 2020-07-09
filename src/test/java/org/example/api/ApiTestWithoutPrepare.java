@@ -19,7 +19,7 @@ public class ApiTestWithoutPrepare {
                 .baseUri("https://petstore.swagger.io/v2/") // задаём базовый адрес каждого ресурса
                 .header(new Header("api_key", System.getProperty("api.key")))// задаём заголовок с токеном для авторизации
                 .accept(ContentType.JSON)// задаём заголовок accept
-                .pathParam("petId", 123)// заранее задаём переменную petId
+                .pathParam("petId", System.getProperty("petId"))// заранее задаём переменную petId
                                                //(так как это просто пример, нужно убедиться, что объект с таким Id существует)
                 .log().all()//задаём логгирование запроса
             .when()//КОГДА:

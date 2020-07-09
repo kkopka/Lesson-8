@@ -98,15 +98,16 @@ public class ApiTest {
     }
 
     @Test
-    public void tetDelete() {
+    public void tetDelete() throws IOException {
+        System.getProperties().load(ClassLoader.getSystemResourceAsStream("my.properties"));
         given()
-                .pathParam("petId", 123)
+                .pathParam("petId", System.getProperty("petId"))
             .when()
                 .delete("/pet/{petId}")
             .then()
                 .statusCode(200);
         given()
-                .pathParam("petId", 123)
+                .pathParam("petId", System.getProperty("petId"))
              .when()
                 .get("/pet/{petId}")
              .then()
