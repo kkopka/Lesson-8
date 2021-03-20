@@ -28,7 +28,7 @@ public class ApiTest {
         // в конкретных запросах. Подробнее тут: https://habr.com/ru/post/421005/
         RestAssured.requestSpecification = new RequestSpecBuilder()
                 .setBaseUri("https://petstore.swagger.io/v2/") // задаём базовый адрес каждого ресурса
-                .addHeader("api_key", System.getProperty("api.key")) // задаём заголовок с токеном для авторизации
+                .addHeader("api_key", ("api")) // задаём заголовок с токеном для авторизации
                 // обязательно учитывайте, что любые приватные данные необходимо хранить в отдельных файлах, которые НЕ публикуютя
                 // в открытых репозиториях (в закрытых тоже лучше не публиковать)
                 .setAccept(ContentType.JSON) // задаём заголовок accept
@@ -54,7 +54,6 @@ public class ApiTest {
         String name = "Pet_" + UUID.randomUUID().toString(); // UUID гарантирует уникальность строки
         pet.setId(id);
         pet.setName(name);
-
         given()  // часть стандартного синтаксиса BDD. Означает предварительные данные. Иначе говоря ДАНО:
                 .body(pet) // указываем что  помещаем в тело запроса. Поскольку у нас подключен Gson, он преобразуется в JSON
             .when()   // КОГДА:
@@ -101,7 +100,7 @@ public class ApiTest {
     public void tetDelete() throws IOException {
         System.getProperties().load(ClassLoader.getSystemResourceAsStream("my.properties"));
         given()
-                .pathParam("petId", System.getProperty("petId"))
+                .pathParam("petId", ("petId"))
             .when()
                 .delete("/pet/{petId}")
             .then()
