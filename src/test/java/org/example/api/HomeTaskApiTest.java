@@ -38,7 +38,6 @@ public class HomeTaskApiTest {
         int id = new Random().nextInt(500000);
         idForDelet = id;
         int petId = new Random().nextInt(500000);
-        int quantity = new Random().nextInt(5);
         pet1.setId(id);
         pet1.setPetId(petId);
         pet1.setQuantity(new Random().nextInt(5));
