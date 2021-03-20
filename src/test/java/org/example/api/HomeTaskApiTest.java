@@ -41,9 +41,8 @@ public class HomeTaskApiTest {
         int quantity = new Random().nextInt(5);
         pet1.setId(id);
         pet1.setPetId(petId);
-        pet1.setQuantity(quantity);
-        pet1.setStatus("placed");
-        pet1.setComplete("true");
+        pet1.setQuantity(new Random().nextInt(5));
+
         given()
                 .body(pet1)
                 .when()
