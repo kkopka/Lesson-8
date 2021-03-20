@@ -17,7 +17,9 @@ import java.util.Random;
 import static io.restassured.RestAssured.given;
 
 public class HomeTaskApiTest {
-    public Integer idForDelet = null;
+    Pet pet1 = new Pet();
+    private int id = new Random().nextInt(500000);
+    private int petId = new Random().nextInt(500000);
 
     @BeforeClass
     public void prepare() throws IOException {
@@ -34,10 +36,6 @@ public class HomeTaskApiTest {
 
     @Test
     public void request() {
-        Pet pet1 = new Pet();
-        int id = new Random().nextInt(500000);
-        idForDelet = id;
-        int petId = new Random().nextInt(500000);
         pet1.setId(id);
         pet1.setPetId(petId);
         pet1.setQuantity(new Random().nextInt(5));
@@ -66,13 +64,13 @@ public class HomeTaskApiTest {
     @Test
     public void tetDelete() throws IOException {
         given()
-                .pathParam("orderId", idForDelet)
+                .pathParam("orderId", pet1.getId())
                 .when()
                 .delete("/store/order/{orderId}")
                 .then()
                 .statusCode(200);
         given()
-                .pathParam("orderId",idForDelet)
+                .pathParam("orderId", pet1.getId())
                 .when()
                 .get("/store/order/{orderId}")
                 .then()
