@@ -9,6 +9,7 @@ import org.example.model.Pet;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
 import java.io.IOException;
 import java.util.Random;
 
@@ -16,7 +17,8 @@ import java.util.Random;
 import static io.restassured.RestAssured.given;
 
 public class HomeTaskApiTest {
-    public Integer idForDelet=null;
+    public Integer idForDelet = null;
+
     @BeforeClass
     public void prepare() throws IOException {
         System.getProperties().load(ClassLoader.getSystemResourceAsStream("my.properties"));
@@ -29,13 +31,14 @@ public class HomeTaskApiTest {
                 .build();
         RestAssured.filters(new ResponseLoggingFilter());
     }
+
     @Test
-    public void request(){
+    public void request() {
         Pet pet1 = new Pet();
         int id = new Random().nextInt(500000);
-        idForDelet=id;
+        idForDelet = id;
         int petId = new Random().nextInt(500000);
-        int quantity=new Random().nextInt(5);
+        int quantity = new Random().nextInt(5);
         pet1.setId(id);
         pet1.setPetId(petId);
         pet1.setQuantity(quantity);
@@ -51,7 +54,7 @@ public class HomeTaskApiTest {
 
         Pet actual =
                 given()
-                        .pathParam("orderId", id) //
+                        .pathParam("orderId", id)
                         .when()
                         .get("/store/order/{orderId}")
                         .then()
@@ -61,19 +64,21 @@ public class HomeTaskApiTest {
 
         Assert.assertEquals(actual.getId(), pet1.getId());
     }
+
     @Test
     public void tetDelete() throws IOException {
         given()
-                .pathParam("orderId",idForDelet)
+                .pathParam("orderId", idForDelet)
                 .when()
                 .delete("/store/order/{orderId}")
                 .then()
                 .statusCode(200);
         given()
+                .pathParam("orderId",idForDelet)
                 .when()
-                .get("/store/inventory")
+                .get("/store/order/{orderId}")
                 .then()
-                .statusCode(200);
+                .statusCode(404);
     }
 
 }
